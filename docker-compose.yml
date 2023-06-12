@@ -1,0 +1,18 @@
+version: '3'
+services:
+  node:
+    image: node:18.16.0
+    container_name: node
+    build: ./ 
+    tty: true
+    stdin_open: true
+    command: bash
+    restart: always
+    working_dir: /app
+    volumes:
+      - ./:/app
+  mongo-restore:
+    image: mongo
+    volumes:
+      - ./db:/dump # replace with the path to your BSON and JSON files
+    command: mongorestore --uri="YOUR-MONGO-URI" --drop /dump
